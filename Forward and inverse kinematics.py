@@ -2,24 +2,18 @@ import os
 import numpy as np
 import gym
 from gym import wrappers
-# import pybullet_envs
-
-ENV_NAME = 'BipedalWalker-v2'
-# ENV_NAME = 'HalfCheetahBulletEnv-v0'
-
+ENV_NAME = 'BipedalWalker-v2
 class Hp():
-    # Hyperparameters
     def __init__(self,
-                 nb_steps=1000,
-                 episode_length=2000,
+                 nb_steps=1022,
+                 episode_length=5000,
                  learning_rate=0.02,
                  num_deltas=16,
                  num_best_deltas=16,
                  noise=0.03,
                  seed=1,
-                 env_name='BipedalWalker-v2',
+                 env_name=ENV_NAME,
                  record_every=50):
-
         self.nb_steps = nb_steps
         self.episode_length = episode_length
         self.learning_rate = learning_rate
