@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sun Aug 11 15:03:05 2019
+Created on Sun Aug 11 21:05:30 2019
 
 @author: Surendran Nambiar
 """
+
 import gym
 import numpy as np
 import random
 import time
 import pickle
-env=gym.make('FrozenLake-v0')
+env=gym.make('Taxi-v2')
 gamma=0.8
 epsilon=0.2
 lr=0.001
@@ -17,7 +18,7 @@ Q=np.zeros((env.observation_space.n,env.action_space.n))
 
 def generate_random_action(env):
     return np.random.choice(env.action_space.n)
-def run_game(env,episodes=50000):
+def run_game(env,episodes=150000):
     for i in range(episodes):
         curr_state=env.reset()
         print(i)
@@ -35,7 +36,7 @@ def run_game(env,episodes=50000):
                 #print(Q[curr_state,action])
 
                 curr_state=new_state
-                if done or reward==-1:
+                if done or reward==-10:
                     break
             else:
                 #exploit
@@ -49,7 +50,7 @@ def run_game(env,episodes=50000):
                 Q[curr_state,action]=Q[curr_state,action]+(lr*(reward+(gamma*np.max(Q[new_state,:]))-Q[curr_state,action]))
                 #print(Q[curr_state,action])                
                 curr_state=new_state
-                if done or reward==-1:
+                if done or reward==-10:
                     break
 
 run_game(env)
@@ -62,13 +63,14 @@ def play_one_turn(env):
     while True:
         action=np.argmax(Q[curr_state,:])
         new_state,reward,done,info=env.step(action)
+        print(reward,done)
         env.render()
         time.sleep(1)
         curr_state=new_state
-        if done or reward==-1:
+        if done or reward==-10:
                     break
 
 play_one_turn(env)
 
-with open("frozenLake_qTable.pkl", 'wb') as f:
+with open("Taxi_v2_qtable.pkl", 'wb') as f:
     pickle.dump(Q, f)
